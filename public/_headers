@@ -1,0 +1,12 @@
+# Cloudflare Pages — headers de cache e segurança
+# Arquivo: public/_headers
+
+/
+  Cache-Control: no-store, no-cache, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+
+/api/*
+  Cache-Control: no-store, no-cache, must-revalidate
+  X-Content-Type-Options: nosniff

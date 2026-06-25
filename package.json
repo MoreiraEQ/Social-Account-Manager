@@ -1,0 +1,9 @@
+{
+  "name": "modular-cloud-dashboard",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Multi-user dashboard on Cloudflare Pages + Functions + Neon Postgres",
+  "dependencies": {
+    "@neondatabase/serverless": "^0.10.4"
+  }
+}
