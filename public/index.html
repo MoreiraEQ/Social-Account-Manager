@@ -7,6 +7,13 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>PAINEL YUMA SOLUÇÕES</title>
+<script>
+  // Aplica tema salvo o quanto antes possível (evita flash de tema errado)
+  try {
+    var t = localStorage.getItem('yuma_theme');
+    if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  } catch (e) {}
+</script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
   :root {
@@ -16,6 +23,25 @@
     --accent: #d63aff; --accent2: #a020c8;
     --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --pink: #ff3aaa;
     --radius: 8px; --shadow: 0 4px 32px rgba(180,0,255,0.25);
+  }
+  /* Modo claro — fundo creme/off-white com roxo da marca preservado */
+  html[data-theme="light"] {
+    --bg: #faf6f0;          /* creme suave */
+    --surface: #ffffff;     /* cartões brancos */
+    --surface2: #f3eef7;    /* destaque roxo-creme bem leve */
+    --border: #e6dcef;      /* borda discreta */
+    --border2: #c9b8d8;     /* borda destaque */
+    --text: #2a1740;        /* texto principal — roxo escuro (não preto puro) */
+    --text2: #5a4570;       /* secundário */
+    --text3: #8b7aa0;       /* terciário */
+    --accent: #a020c8;      /* roxo da marca um pouco mais escuro pra contraste */
+    --accent2: #7c1ba0;     /* hover/ativo */
+    --green: #15803d; --yellow: #b45309; --red: #b91c1c; --pink: #c2185b;
+    --shadow: 0 4px 24px rgba(120, 40, 180, 0.10);
+  }
+  /* Transição suave ao alternar tema */
+  html, body, header, .tabs, .card, .tab, button, input, select, textarea, table, th, td {
+    transition: background-color 0.25s ease, color 0.2s ease, border-color 0.2s ease;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 13px; }
@@ -286,6 +312,7 @@
 <header>
   <div class="logo">&#9672; <span>PAINEL YUMA</span>&nbsp;SOLUÇÕES</div>
   <div class="header-actions">
+    <button class="btn btn-ghost" id="btn-theme" onclick="toggleTheme()" title="Alternar tema claro/escuro" aria-label="Alternar tema">&#9790;</button>
     <button class="btn btn-settings" onclick="openSettings()">&#9881; Configurações</button>
     <button class="btn btn-ghost" id="btn-export" onclick="exportCSV()">&#8595; Exportar CSV</button>
     <button class="btn btn-primary" id="btn-nova" onclick="openModal()">+ Nova Conta</button>
@@ -617,7 +644,7 @@
       </div>
       <div class="form-group" style="grid-column:1/-1">
         <label class="form-label">Descrição</label>
-        <input class="form-input" id="fin-desc" placeholder="ex: Revenue, Tooling, Ads...">
+        <input class="form-input" id="fin-desc" placeholder="ex: CONTASY, GGMAX-CAPCUT, Receita ads...">
       </div>
       <div class="form-group">
         <label class="form-label">Valor (R$)</label>
@@ -742,7 +769,7 @@
     <div class="form-grid">
       <div class="form-group">
         <label class="form-label">Nome da plataforma *</label>
-        <input class="form-input" id="platform-nome" placeholder="ex: Tool A, Tool B, Canva...">
+        <input class="form-input" id="platform-nome" placeholder="ex: ContaSY, GGMAX, Canva...">
       </div>
       <div class="form-group">
         <label class="form-label">Ícone / Emoji</label>
@@ -796,13 +823,37 @@
 
 <script type="text/app-source" id="__app_src">
 // ═══════════════════════════════════════════
+// TEMA (claro/escuro)
+// ═══════════════════════════════════════════
+function applyThemeIcon(){
+  const btn = document.getElementById('btn-theme');
+  if(!btn) return;
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  // Lua para mudar pra escuro, sol para mudar pra claro
+  btn.innerHTML = isLight ? '&#9728;' : '&#9790;';
+  btn.title = isLight ? 'Mudar para modo escuro' : 'Mudar para modo claro';
+}
+function toggleTheme(){
+  const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+  if(isLight){
+    document.documentElement.removeAttribute('data-theme');
+    try { localStorage.setItem('yuma_theme', 'dark'); } catch(e){}
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    try { localStorage.setItem('yuma_theme', 'light'); } catch(e){}
+  }
+  applyThemeIcon();
+}
+applyThemeIcon();
+
+// ═══════════════════════════════════════════
 // OPTIONS
 // ═══════════════════════════════════════════
 const DEFAULT_OPTIONS = {
-  users:['Alex','Sam','Jordan'],
+  users:['Mateus','Yuri','Felipe'],
   situacoes:['RODANDO','AQUECER','CRIAR TIKTOK','BANIDA','PAUSADA'],
   redes:['TIKTOK','FACEBOOK','INSTAGRAM','YOUTUBE'],
-  nichos:['DEMO-APP'],
+  nichos:['AURALYAPP'],
   celulares:['Sem celular','Samsung S21','Samsung S22','Samsung S23','iPhone 14','iPhone 15'],
   proxies:['Proxy YUMA 1','74.122.56.82','142.248.146.99'],
 };
@@ -1595,8 +1646,8 @@ function switchAcompSub(sub){
   renderCalendar();
 }
 
-const TASK_USERS=['Alex','Sam','Jordan'];
-const TASK_COLORS={'Alex':'#d63aff','Sam':'#ff3aaa','Jordan':'#3b82f6'};
+const TASK_USERS=['Mateus','Yuri','Felipe'];
+const TASK_COLORS={'Mateus':'#d63aff','Yuri':'#ff3aaa','Felipe':'#3b82f6'};
 
 function renderTaskBoard(){
   const board=document.getElementById('task-board'); if(!board) return;
