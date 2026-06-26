@@ -6,11 +6,11 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>PAINEL YUMA SOLUÇÕES</title>
+<title>Social Account Manager</title>
 <script>
   // Aplica tema salvo o quanto antes possível (evita flash de tema errado)
   try {
-    var t = localStorage.getItem('yuma_theme');
+    var t = localStorage.getItem('sam_theme');
     if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
   } catch (e) {}
 </script>
@@ -310,7 +310,7 @@
 <body>
 
 <header>
-  <div class="logo">&#9672; <span>PAINEL YUMA</span>&nbsp;SOLUÇÕES</div>
+  <div class="logo">&#9672; <span>SOCIAL ACCOUNT</span>&nbsp;MANAGER</div>
   <div class="header-actions">
     <button class="btn btn-ghost" id="btn-theme" onclick="toggleTheme()" title="Alternar tema claro/escuro" aria-label="Alternar tema">&#9790;</button>
     <button class="btn btn-settings" onclick="openSettings()">&#9881; Configurações</button>
@@ -484,7 +484,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">IP Proxy</label>
-        <input class="form-input" id="f-ipProxy" placeholder="ex: 142.248.146.99">
+        <input class="form-input" id="f-ipProxy" placeholder="ex: 10.0.0.1">
       </div>
       <div class="form-group">
         <label class="form-label">Renovação (dia/mês/ano)</label>
@@ -644,7 +644,7 @@
       </div>
       <div class="form-group" style="grid-column:1/-1">
         <label class="form-label">Descrição</label>
-        <input class="form-input" id="fin-desc" placeholder="ex: CONTASY, GGMAX-CAPCUT, Receita ads...">
+        <input class="form-input" id="fin-desc" placeholder="ex: Revenue, Tooling, Ads...">
       </div>
       <div class="form-group">
         <label class="form-label">Valor (R$)</label>
@@ -769,7 +769,7 @@
     <div class="form-grid">
       <div class="form-group">
         <label class="form-label">Nome da plataforma *</label>
-        <input class="form-input" id="platform-nome" placeholder="ex: ContaSY, GGMAX, Canva...">
+        <input class="form-input" id="platform-nome" placeholder="ex: Tool A, Tool B, Canva...">
       </div>
       <div class="form-group">
         <label class="form-label">Ícone / Emoji</label>
@@ -837,10 +837,10 @@ function toggleTheme(){
   const isLight = document.documentElement.getAttribute('data-theme') === 'light';
   if(isLight){
     document.documentElement.removeAttribute('data-theme');
-    try { localStorage.setItem('yuma_theme', 'dark'); } catch(e){}
+    try { localStorage.setItem('sam_theme', 'dark'); } catch(e){}
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
-    try { localStorage.setItem('yuma_theme', 'light'); } catch(e){}
+    try { localStorage.setItem('sam_theme', 'light'); } catch(e){}
   }
   applyThemeIcon();
 }
@@ -850,12 +850,12 @@ applyThemeIcon();
 // OPTIONS
 // ═══════════════════════════════════════════
 const DEFAULT_OPTIONS = {
-  users:['Mateus','Yuri','Felipe'],
+  users:['Alex','Sam','Jordan'],
   situacoes:['RODANDO','AQUECER','CRIAR TIKTOK','BANIDA','PAUSADA'],
   redes:['TIKTOK','FACEBOOK','INSTAGRAM','YOUTUBE'],
-  nichos:['AURALYAPP'],
+  nichos:['DEMO-APP'],
   celulares:['Sem celular','Samsung S21','Samsung S22','Samsung S23','iPhone 14','iPhone 15'],
-  proxies:['Proxy YUMA 1','74.122.56.82','142.248.146.99'],
+  proxies:['Proxy A','10.0.0.1','10.0.0.2'],
 };
 function loadOptions(){ const s=localStorage.getItem('cc_options'); return s?JSON.parse(s):JSON.parse(JSON.stringify(DEFAULT_OPTIONS)); }
 function saveOptions(){ localStorage.setItem('cc_options',JSON.stringify(options)); }
@@ -1646,8 +1646,8 @@ function switchAcompSub(sub){
   renderCalendar();
 }
 
-const TASK_USERS=['Mateus','Yuri','Felipe'];
-const TASK_COLORS={'Mateus':'#d63aff','Yuri':'#ff3aaa','Felipe':'#3b82f6'};
+const TASK_USERS=['Alex','Sam','Jordan'];
+const TASK_COLORS={'Alex':'#d63aff','Sam':'#ff3aaa','Jordan':'#3b82f6'};
 
 function renderTaskBoard(){
   const board=document.getElementById('task-board'); if(!board) return;
@@ -2168,7 +2168,7 @@ renderAcompanhamento();
 updateTabCounts();
 
 // Re-lê todos os dados do banco após o app iniciar (garante que celular mostre tudo)
-window.__yumaRehydrate = function(){
+window.__samRehydrate = function(){
   try { acompTasks = loadAcompTasks(); } catch(e){}
   try { calEvents = loadCalEvents(); } catch(e){}
   try { finEntries = loadFinData(); } catch(e){}
@@ -2395,11 +2395,11 @@ window.__yumaRehydrate = function(){
 
       // tela de carregamento
       var msgEl = document.getElementById("__boot-msg");
-      if(msgEl) msgEl.textContent = "YUMA SOLUÇÕES";
+      if(msgEl) msgEl.textContent = "SOCIAL ACCOUNT MANAGER";
       setTimeout(function(){
         startApp();
         setTimeout(function(){
-          if(typeof window.__yumaRehydrate === 'function') window.__yumaRehydrate();
+          if(typeof window.__samRehydrate === 'function') window.__samRehydrate();
         }, 100);
       }, 300);
     })
